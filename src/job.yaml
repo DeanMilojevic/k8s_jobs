@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: time-teller
+spec:
+  parallelism: 2          # how many parallel jobs we can run
+  completions: 4          # in case we run job in parallel manner how many times we need to run the job to mark the job as completed
+  template:
+    metadata:
+      name: time-teller
+    spec:
+      restartPolicy: Never 
+      containers: 
+      - image: alpine
+        name: alpine
+        command:
+        - "sh"
+        - "-c"
+        - "echo 'hello from a job'"
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"

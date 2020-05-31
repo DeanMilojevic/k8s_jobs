@@ -1,0 +1,23 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: time-teller
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers: 
+          - image: alpine
+            name: alpine
+            command:
+            - "sh"
+            - "-c"
+            - "echo `hello from a cronjob`"
+            resources:
+              limits:
+                memory: "64Mi"
+                cpu: "100m"
